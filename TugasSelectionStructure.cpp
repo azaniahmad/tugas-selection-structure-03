@@ -1,40 +1,44 @@
 #include <iostream>
-using namespace std;
+#include <vector>
 
-// Fungsi untuk mengecek apakah sebuah bilangan adalah prima
-bool isPrima(int n) {
-    if (n <= 1) return false;
-    if (n == 2) return true;
-    if (n % 2 == 0) return false;
-
-    for (int i = 3; i * i <= n; i += 2) {
-        if (n % i == 0) return false;
+// Fungsi untuk memeriksa apakah suatu bilangan prima
+bool isPrime(int n) {
+    if (n <= 1) return false;  // Bilangan kurang dari atau sama dengan 1 bukan prima
+    for (int i = 2; i * i <= n; i++) {  // Periksa pembagian dari 2 hingga sqrt(n)
+        if (n % i == 0) return false;  // Jika dapat dibagi, bukan prima
     }
-    return true;
+    return true;  // Jika tidak ada pembagi, itu prima
 }
 
 int main() {
-    int batas = 50;
-    int jumlah = 0;
+    std::vector<int> primes;  // Vektor untuk menyimpan bilangan prima
+    int sum = 0;  // Variabel untuk menyimpan jumlah prima
+    int count = 0;  // Variabel untuk menghitung jumlah prima
+    int limit = 50;  // Batas atas untuk memeriksa prima
 
-    cout << "==========================================\n";
-    cout << "  PROGRAM BILANGAN PRIMA (1 - 50)\n";
-    cout << "==========================================\n\n";
-
-    cout << "Bilangan Prima antara 1 sampai " << batas << ":\n";
-    cout << "------------------------------------------\n";
-
-    // Mencari dan menampilkan bilangan prima
-    for (int i = 1; i <= batas; i++) {
-        if (isPrima(i)) {
-            cout << i << " ";
-            jumlah++;
+    // Loop melalui bilangan dari 2 hingga batas
+    for (int i = 2; i <= limit; i++) {
+        if (isPrime(i)) {  // Jika bilangan tersebut prima
+            primes.push_back(i);  // Tambahkan ke vektor prima
+            sum += i;  // Tambahkan ke jumlah
+            count++;  // Tambah hitungan
         }
     }
 
-    cout << "\n------------------------------------------\n";
-    cout << "\nTotal Jumlah Bilangan Prima: " << jumlah << "\n";
-    cout << "==========================================\n";
+    // Keluarkan daftar prima
+    std::cout << "Bilangan prima dari 1 sampai " << limit << ": " << std::endl;
+    for (size_t i = 0; i < primes.size(); i++) {  // Loop melalui vektor prima
+        std::cout << primes[i];  // Cetak prima
+        if (i < primes.size() - 1) {  // Jika bukan prima terakhir
+            std::cout << " | ";  // Tambahkan pemisah
+        }
+    }
+    std::cout << std::endl;
 
-    return 0;
+    // Keluarkan jumlah prima
+    std::cout << "Jumlah bilangan prima :" << count << std::endl;
+    // Keluarkan total prima
+    std::cout << "Total bilangan prima :" << sum << std::endl;
+
+    return 0;  // Akhir program
 }
